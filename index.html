@@ -1,0 +1,1839 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aprendiz Organiza - Reorganização de Rotinas Administrativas</title>
+
+    <!-- Favicon: Ícone de prédio dentro de uma bolinha azul -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230284c7'/><path fill='white' d='M30 80V40L50 20L70 40V80H55V60H45V80H30ZM40 55H45V50H40V55ZM55 55H60V50H55V55Z'/></svg>"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                500: "#0284c7",
+                600: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+              eco: {
+                500: "#10b981",
+                600: "#059669",
+                700: "#047857",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Estilos Customizados CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white"
+  >
+    <!-- Navegação Fixa com Animação Hover -->
+    <header
+      class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 no-print transition-all duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 gap-2">
+          <!-- Logo Block -->
+          <div
+            class="flex items-center space-x-2 sm:space-x-3 group cursor-pointer shrink-0"
+          >
+            <div
+              class="p-1.5 sm:p-2 bg-brand-600 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+            >
+              <i
+                data-lucide="building-2"
+                class="w-5 h-5 sm:w-6 sm:h-6 text-white"
+              ></i>
+            </div>
+            <div>
+              <span
+                class="font-bold text-base sm:text-lg tracking-tight block group-hover:text-brand-500 transition-colors"
+                >Aprendiz Organiza</span
+              >
+              <span
+                class="hidden sm:block text-[10px] sm:text-xs text-slate-400 -mt-1"
+                >Gestão & Eficiência 2026</span
+              >
+            </div>
+          </div>
+
+          <!-- Desktop Nav -->
+          <nav
+            class="hidden lg:flex items-center gap-2 xl:gap-5 text-[11px] xl:text-sm font-medium"
+          >
+            <a
+              href="#diagnostico"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >Diagnóstico</a
+            >
+            <a
+              href="#contratos"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >Contratos</a
+            >
+            <a
+              href="#planilhas"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >Planilhas</a
+            >
+            <a
+              href="#raci"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >Responsabilidades</a
+            >
+            <a
+              href="#sustentabilidade"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >Sustentabilidade/LGPD</a
+            >
+            <a
+              href="#kpis"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >KPIs</a
+            >
+            <a
+              href="#cronograma"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >Cronograma</a
+            >
+            <a
+              href="#fluxogramas"
+              class="nav-link-anim hover:text-brand-500 whitespace-nowrap"
+              >Fluxogramas</a
+            >
+          </nav>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <button
+              onclick="window.print()"
+              class="hidden sm:flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-3 xl:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+            >
+              <i data-lucide="printer" class="w-4 h-4"></i>
+              <span class="hidden xl:inline">Imprimir / PDF</span>
+            </button>
+
+            <button
+              id="mobile-menu-btn"
+              class="lg:hidden p-1.5 sm:p-2 text-slate-300 hover:text-white focus:outline-none transition-colors"
+            >
+              <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu Mobile / Tablet -->
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden bg-slate-800 border-t border-slate-700"
+      >
+        <nav class="flex flex-col px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
+          <a
+            href="#diagnostico"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >Diagnóstico</a
+          >
+          <a
+            href="#contratos"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >Contratos</a
+          >
+          <a
+            href="#planilhas"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >Planilhas</a
+          >
+          <a
+            href="#raci"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >Responsabilidades</a
+          >
+          <a
+            href="#sustentabilidade"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >Sustentabilidade/LGPD</a
+          >
+          <a
+            href="#kpis"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >KPIs</a
+          >
+          <a
+            href="#cronograma"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >Cronograma</a
+          >
+          <a
+            href="#fluxogramas"
+            class="mobile-link text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md"
+            >Fluxogramas</a
+          >
+          <button
+            onclick="window.print()"
+            class="mobile-link flex items-center gap-2 text-slate-300 hover:text-brand-500 hover:bg-slate-700 px-3 py-2 rounded-md sm:hidden"
+          >
+            <i data-lucide="printer" class="w-4 h-4"></i> Imprimir / PDF
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      class="bg-gradient-to-br from-slate-900 via-slate-800 to-brand-900 text-white py-12 lg:py-16 overflow-hidden"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl animate-canva-fade">
+          <div
+            class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/30 text-brand-500 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 animate-canva-pop"
+          >
+            <i data-lucide="shield-check" class="w-4 h-4"></i> Plano Oficial de
+            Reorganização
+          </div>
+          <h1
+            class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight"
+          >
+            Reorganização de Rotinas Administrativas
+          </h1>
+          <p class="mt-4 text-lg text-slate-300">
+            Proposta de otimização operacional, padronização de processos,
+            digitalização e sustentabilidade pós-aumento de demanda no 1º
+            semestre de 2026.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-4 text-sm text-slate-300">
+            <div
+              class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-md border border-slate-700 hover:border-brand-500 transition-colors"
+            >
+              <i data-lucide="user" class="w-4 h-4 text-brand-500"></i>
+              <span
+                ><strong>Elaborado por:</strong> Aprendiz Organiza</span
+              >
+            </div>
+            <div
+              class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-md border border-slate-700 hover:border-brand-500 transition-colors"
+            >
+              <i data-lucide="calendar" class="w-4 h-4 text-brand-500"></i>
+              <span><strong>Ciclo:</strong> 2º Semestre / 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+      <!-- SEÇÃO 1: Diagnóstico e Ordem de Urgência -->
+      <section
+        id="diagnostico"
+        class="scroll-mt-20 animate-canva-fade"
+        style="animation-delay: 0.1s"
+      >
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="alert-triangle" class="text-amber-500"></i>
+            Diagnóstico Operacional & Matriz de Urgência
+          </h2>
+          <p class="text-slate-600 text-sm mt-1">
+            Análise dos gargalos identificados no primeiro semestre e
+            hierarquização de solução.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div
+            class="bg-white border-l-4 border-red-500 p-4 rounded-r-xl shadow-sm hover-lift cursor-default"
+          >
+            <span
+              class="text-xs font-bold text-red-600 uppercase tracking-wider block mb-1"
+              >1º Urgência</span
+            >
+            <h3 class="font-bold text-slate-800 text-sm mb-1">
+              Falta de Comunicação Interna
+            </h3>
+            <p class="text-xs text-slate-600">
+              Falta de canal oficial entre setores (Admin, Ops, Fin) gerando
+              ruídos e atrasos em cadeia.
+            </p>
+          </div>
+          <div
+            class="bg-white border-l-4 border-orange-500 p-4 rounded-r-xl shadow-sm hover-lift cursor-default"
+          >
+            <span
+              class="text-xs font-bold text-orange-600 uppercase tracking-wider block mb-1"
+              >2º Urgência</span
+            >
+            <h3 class="font-bold text-slate-800 text-sm mb-1">
+              Perda de Documentos Físicos
+            </h3>
+            <p class="text-xs text-slate-600">
+              Arquivamento em papel sem rastreabilidade, causando perdas de
+              comprovantes de serviços.
+            </p>
+          </div>
+          <div
+            class="bg-white border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm hover-lift cursor-default"
+          >
+            <span
+              class="text-xs font-bold text-amber-600 uppercase tracking-wider block mb-1"
+              >3º Urgência</span
+            >
+            <h3 class="font-bold text-slate-800 text-sm mb-1">
+              Planilhas Sem Padronização
+            </h3>
+            <p class="text-xs text-slate-600">
+              Registros descentralizados e informais gerando divergências em
+              escalas e lançamentos.
+            </p>
+          </div>
+          <div
+            class="bg-white border-l-4 border-blue-500 p-4 rounded-r-xl shadow-sm hover-lift cursor-default"
+          >
+            <span
+              class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1"
+              >4º Urgência</span
+            >
+            <h3 class="font-bold text-slate-800 text-sm mb-1">
+              Atraso em 18 Contratos
+            </h3>
+            <p class="text-xs text-slate-600">
+              Impacto direto no faturamento e relacionamento com cliente por
+              falta de fluxo rápido.
+            </p>
+          </div>
+          <div
+            class="bg-white border-l-4 border-slate-400 p-4 rounded-r-xl shadow-sm hover-lift cursor-default"
+          >
+            <span
+              class="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-1"
+              >5º Urgência</span
+            >
+            <h3 class="font-bold text-slate-800 text-sm mb-1">
+              Aumento de Demanda
+            </h3>
+            <p class="text-xs text-slate-600">
+              Crescimento acelerado do 1º semestre sobrecarregou a estrutura
+              arcaica existente.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2: Regularização de Contratos -->
+      <section
+        id="contratos"
+        class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm scroll-mt-20 hover-lift"
+      >
+        <div
+          class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
+        >
+          <div>
+            <h2
+              class="text-xl font-bold text-slate-900 flex items-center gap-2"
+            >
+              <i data-lucide="file-text" class="text-brand-600"></i>
+              Reorganização dos contratos atrasados
+            </h2>
+            <p class="text-slate-600 text-sm">
+              Acompanhamento e força-tarefa para regularização imediata com os
+              clientes.
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <button
+              onclick="filterContracts('todos')"
+              class="px-3 py-1.5 text-xs font-semibold rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all hover:scale-105 active:scale-95"
+            >
+              Todos (18)
+            </button>
+            <button
+              onclick="filterContracts('pendente')"
+              class="px-3 py-1.5 text-xs font-semibold rounded-md bg-red-100 hover:bg-red-200 text-red-700 transition-all hover:scale-105 active:scale-95"
+            >
+              Pendentes
+            </button>
+            <button
+              onclick="filterContracts('em_analise')"
+              class="px-3 py-1.5 text-xs font-semibold rounded-md bg-amber-100 hover:bg-amber-200 text-amber-700 transition-all hover:scale-105 active:scale-95"
+            >
+              Em Análise
+            </button>
+            <button
+              onclick="filterContracts('enviado')"
+              class="px-3 py-1.5 text-xs font-semibold rounded-md bg-emerald-100 hover:bg-emerald-200 text-emerald-700 transition-all hover:scale-105 active:scale-95"
+            >
+              Enviados
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr
+                class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold"
+              >
+                <th class="p-3">ID</th>
+                <th class="p-3">Cliente</th>
+                <th class="p-3">Data Solicitação</th>
+                <th class="p-3">Dias Atraso</th>
+                <th class="p-3">Responsável</th>
+                <th class="p-3">Status</th>
+                <th class="p-3 text-right">Ação</th>
+              </tr>
+            </thead>
+            <tbody
+              id="contractsTableBody"
+              class="divide-y divide-slate-100"
+            ></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SEÇÃO: GERENCIADOR DE PLANILHAS DA EQUIPE -->
+      <section
+        id="planilhas"
+        class="bg-white rounded-xl border border-brand-200 p-6 shadow-sm scroll-mt-20 hover-lift"
+      >
+        <div
+          class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100"
+        >
+          <div>
+            <div
+              class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-800 text-xs px-2.5 py-0.5 rounded-full font-semibold mb-2"
+            >
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Espaço da
+              Equipe
+            </div>
+            <h2
+              class="text-2xl font-bold text-slate-900 flex items-center gap-2"
+            >
+              <i data-lucide="file-spreadsheet" class="text-brand-600"></i>
+              Gerenciador de Planilhas & Dados
+            </h2>
+            <p class="text-slate-600 text-sm mt-1">
+              Área restrita para a equipe adicionar novos registros de planilhas
+              e consultar cadastros por PF (Pessoa Física) ou CPF.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Formulário -->
+          <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+            <h3
+              class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2"
+            >
+              <i data-lucide="plus-circle" class="w-5 h-5 text-brand-600"></i>
+              Criar / Adicionar Planilha
+            </h3>
+            <form
+              id="sheetForm"
+              onsubmit="saveSheetData(event)"
+              class="space-y-3"
+            >
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1"
+                  >Nome (PF):</label
+                >
+                <input
+                  type="text"
+                  id="inputNome"
+                  required
+                  placeholder="Ex: Maria Oliveira"
+                  class="w-full text-xs p-2.5 rounded border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1"
+                  >CPF:</label
+                >
+                <input
+                  type="text"
+                  id="inputCPF"
+                  required
+                  placeholder="000.000.000-00"
+                  class="w-full text-xs p-2.5 rounded border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1"
+                  >Endereço:</label
+                >
+                <input
+                  type="text"
+                  id="inputEndereco"
+                  required
+                  placeholder="Rua, Número, Bairro, Cidade"
+                  class="w-full text-xs p-2.5 rounded border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                />
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1"
+                    >Telefone:</label
+                  >
+                  <input
+                    type="text"
+                    id="inputTelefone"
+                    required
+                    placeholder="(00) 00000-0000"
+                    class="w-full text-xs p-2.5 rounded border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1"
+                    >PV (Ponto de Venda):</label
+                  >
+                  <input
+                    type="text"
+                    id="inputPV"
+                    required
+                    placeholder="Ex: PV-102"
+                    class="w-full text-xs p-2.5 rounded border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                  />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1"
+                  >E-mail:</label
+                >
+                <input
+                  type="email"
+                  id="inputEmail"
+                  required
+                  placeholder="email@dominio.com"
+                  class="w-full text-xs p-2.5 rounded border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full mt-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow hover:scale-[1.02] active:scale-95"
+              >
+                <i data-lucide="save" class="w-4 h-4"></i> Salvar na Planilha
+              </button>
+            </form>
+          </div>
+
+          <!-- Tabela da Planilha -->
+          <div class="lg:col-span-2 space-y-4">
+            <div
+              class="bg-brand-50/60 p-4 rounded-xl border border-brand-200 flex flex-col md:flex-row gap-3 items-center justify-between"
+            >
+              <div class="w-full md:w-auto">
+                <h4
+                  class="font-bold text-brand-900 text-sm flex items-center gap-1.5"
+                >
+                  <i data-lucide="search" class="w-4 h-4 text-brand-600"></i>
+                  Acessar Planilha por PF ou CPF
+                </h4>
+                <p class="text-xs text-brand-700">
+                  Digite o nome do titular (PF) ou o CPF para filtrar
+                  rapidamente os dados.
+                </p>
+              </div>
+              <div class="w-full md:w-72">
+                <input
+                  type="text"
+                  id="searchSheet"
+                  onkeyup="filterSheetData()"
+                  placeholder="Buscar por Nome (PF) ou CPF..."
+                  class="w-full text-xs p-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                />
+              </div>
+            </div>
+
+            <div
+              class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-sm"
+            >
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr
+                    class="bg-slate-100 border-b border-slate-200 text-slate-700 font-semibold"
+                  >
+                    <th class="p-3">Nome (PF)</th>
+                    <th class="p-3">CPF</th>
+                    <th class="p-3">Telefone / E-mail</th>
+                    <th class="p-3">Endereço</th>
+                    <th class="p-3">PV</th>
+                    <th class="p-3 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="sheetsTableBody"
+                  class="divide-y divide-slate-100"
+                ></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4: Matriz de Responsabilidades -->
+      <section
+        id="raci"
+        class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm scroll-mt-20 hover-lift"
+      >
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="users" class="text-brand-600"></i>
+            Matriz de Responsabilidades Intersetorial
+          </h2>
+          <p class="text-slate-600 text-sm mt-1">
+            Divisão clara de papéis para eliminar sobreposições e omissões
+            operacionais.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div
+            class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-brand-500 transition-all hover:-translate-y-1"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="p-2 bg-brand-100 text-brand-700 rounded-lg">
+                <i data-lucide="folder-check" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-slate-800">Administrativo</h3>
+            </div>
+            <ul
+              class="text-xs text-slate-600 space-y-2 border-t border-slate-200 pt-3"
+            >
+              <li class="flex items-start gap-2">
+                ● Digitalização e padronização do arquivo.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Controle de prazos e minuta dos 18 contratos.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Centralização de planilhas padronizadas.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Triagem de chamados internos.
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-brand-500 transition-all hover:-translate-y-1"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="p-2 bg-amber-100 text-amber-700 rounded-lg">
+                <i data-lucide="truck" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-slate-800">Operacional</h3>
+            </div>
+            <ul
+              class="text-xs text-slate-600 space-y-2 border-t border-slate-200 pt-3"
+            >
+              <li class="flex items-start gap-2">
+                ● Elaboração e alocação exata de escalas.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Apontamento rigoroso de serviços executados.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Envio imediato de comprovantes físicos/digitais.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Cumprimento de SLAs de atendimento.
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-brand-500 transition-all hover:-translate-y-1"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="p-2 bg-emerald-100 text-emerald-700 rounded-lg">
+                <i data-lucide="dollar-sign" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-slate-800">Financeiro</h3>
+            </div>
+            <ul
+              class="text-xs text-slate-600 space-y-2 border-t border-slate-200 pt-3"
+            >
+              <li class="flex items-start gap-2">
+                ● Validação de valores x serviços prestados.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Faturamento e emissão de NFs.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Conciliação e lançamentos no sistema.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Arquivamento de comprovantes fiscais.
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-brand-500 transition-all hover:-translate-y-1"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="p-2 bg-purple-100 text-purple-700 rounded-lg">
+                <i data-lucide="briefcase" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-slate-800">Gestão / Diretoria</h3>
+            </div>
+            <ul
+              class="text-xs text-slate-600 space-y-2 border-t border-slate-200 pt-3"
+            >
+              <li class="flex items-start gap-2">
+                ● Aprovação final de contratos e escalas.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Acompanhamento dos KPIs semanais.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Liberação de recursos e autorizações.
+              </li>
+              <li class="flex items-start gap-2">
+                ● Definição das diretrizes estratégicas.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 5: Sustentabilidade & LGPD -->
+      <section
+        id="sustentabilidade"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-8 scroll-mt-20"
+      >
+        <div
+          class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover-lift"
+        >
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <div class="p-2 bg-eco-500 text-white rounded-lg">
+                <i data-lucide="leaf" class="w-5 h-5"></i>
+              </div>
+              <h2 class="text-xl font-bold text-slate-900">
+                Práticas Sustentáveis (Eco-Office)
+              </h2>
+            </div>
+            <p class="text-xs text-slate-600 mb-4">
+              Medidas para redução de desperdício e transição para o modelo
+              Paperless.
+            </p>
+            <ul class="space-y-3 text-xs text-slate-700">
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="check-circle-2"
+                  class="w-4 h-4 text-eco-600 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Digitalização de Documentos:</strong> Transição do
+                  arquivo físico para armazenamento estruturado em nuvem.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="check-circle-2"
+                  class="w-4 h-4 text-eco-600 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Assinatura Eletrônica:</strong> Eliminação de
+                  impressão para envio e validação dos 18 contratos e novos
+                  termos.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="check-circle-2"
+                  class="w-4 h-4 text-eco-600 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Uso Consciente do Papel:</strong> Impressão frente e
+                  verso obrigatória apenas para fins legais estritos.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="check-circle-2"
+                  class="w-4 h-4 text-eco-600 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Economia de Energia:</strong> Política de
+                  desligamento de equipamentos ao final do expediente.</span
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+            <h4
+              class="font-bold text-slate-800 text-xs mb-2 flex items-center gap-1"
+            >
+              <i data-lucide="calculator" class="w-4 h-4 text-eco-600"></i>
+              Simulação de Economia Anual
+            </h4>
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div
+                class="bg-white p-2 rounded border border-slate-200 hover:border-eco-500 transition-colors"
+              >
+                <span class="block text-slate-500">Papel Economizado</span>
+                <span class="font-bold text-eco-600 text-sm"
+                  >~ 18.000 folhas</span
+                >
+              </div>
+              <div
+                class="bg-white p-2 rounded border border-slate-200 hover:border-brand-500 transition-colors"
+              >
+                <span class="block text-slate-500">Tempo de Busca</span>
+                <span class="font-bold text-brand-600 text-sm">-75% Horas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between hover-lift"
+        >
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <div class="p-2 bg-slate-800 text-white rounded-lg">
+                <i data-lucide="shield-lock" class="w-5 h-5"></i>
+              </div>
+              <h2 class="text-xl font-bold text-slate-900">
+                Segurança da Informação & LGPD
+              </h2>
+            </div>
+            <p class="text-xs text-slate-600 mb-4">
+              Diretrizes de proteção de dados sensíveis e governança de acessos.
+            </p>
+            <ul class="space-y-3 text-xs text-slate-700">
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="lock"
+                  class="w-4 h-4 text-slate-700 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Controle de Acesso por Função (RBAC):</strong>
+                  Permissões restritas no repositório digital de acordo com o
+                  setor.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="database"
+                  class="w-4 h-4 text-slate-700 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Rotina de Backups:</strong> Cópias diárias
+                  automatizadas dos arquivos armazenados na nuvem.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="shield"
+                  class="w-4 h-4 text-slate-700 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Conformidade LGPD:</strong> Criptografia e tratamento
+                  adequado de dados pessoais de clientes e funcionários.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <i
+                  data-lucide="clock"
+                  class="w-4 h-4 text-slate-700 shrink-0 mt-0.5"
+                ></i>
+                <span
+                  ><strong>Tabela de Temporalidade:</strong> Regras claras para
+                  retenção e descarte seguro de registros antigos.</span
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="mt-6 bg-slate-100 p-3 rounded-lg text-slate-600 text-xs flex items-center gap-2"
+          >
+            <i data-lucide="info" class="w-4 h-4 text-slate-500 shrink-0"></i>
+            <span
+              >Arquivos físicos confidenciais remanescentes mantidos sob chave
+              com acesso exclusivo ao RH/Admin.</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 6: Indicadores de Desempenho (KPIs) -->
+      <section
+        id="kpis"
+        class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm scroll-mt-20 hover-lift"
+      >
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="bar-chart-3" class="text-brand-600"></i>
+            Indicadores de Desempenho (KPIs) & Metas
+          </h2>
+          <p class="text-slate-600 text-sm mt-1">
+            *Nota: As metas propostas serão monitoradas continuamente após a
+            medição do diagnóstico inicial (baseline).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            class="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors"
+          >
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold text-slate-500 uppercase"
+                >Contratos no Prazo</span
+              >
+              <span
+                class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded"
+                >Meta: &gt;95%</span
+              >
+            </div>
+            <div class="text-2xl font-extrabold text-slate-800 mb-2">
+              88%
+              <span class="text-xs font-normal text-slate-500"
+                >(Atual em recuperação)</span
+              >
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div
+                class="bg-brand-600 h-full w-[88%] transition-all duration-1000"
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-red-400 transition-colors"
+          >
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold text-slate-500 uppercase"
+                >Divergência nas Escalas</span
+              >
+              <span
+                class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded"
+                >Meta: &lt;2%</span
+              >
+            </div>
+            <div class="text-2xl font-extrabold text-slate-800 mb-2">
+              12%
+              <span class="text-xs font-normal text-red-500"
+                >(Baseline Crítico)</span
+              >
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div
+                class="bg-red-500 h-full w-[65%] transition-all duration-1000"
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-amber-400 transition-colors"
+          >
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold text-slate-500 uppercase"
+                >Tempo Localização Docs</span
+              >
+              <span
+                class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded"
+                >Meta: &lt;3 min</span
+              >
+            </div>
+            <div class="text-2xl font-extrabold text-slate-800 mb-2">
+              25 min
+              <span class="text-xs font-normal text-slate-500">(Início)</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div
+                class="bg-amber-500 h-full w-[40%] transition-all duration-1000"
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-amber-400 transition-colors"
+          >
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold text-slate-500 uppercase"
+                >Taxa de Retrabalho</span
+              >
+              <span
+                class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded"
+                >Meta: &lt;5%</span
+              >
+            </div>
+            <div class="text-2xl font-extrabold text-slate-800 mb-2">
+              18%
+              <span class="text-xs font-normal text-slate-500">(Anterior)</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div
+                class="bg-amber-500 h-full w-[50%] transition-all duration-1000"
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-eco-500 transition-colors"
+          >
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold text-slate-500 uppercase"
+                >Consumo Mensal Papel</span
+              >
+              <span
+                class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded"
+                >Meta: -60%</span
+              >
+            </div>
+            <div class="text-2xl font-extrabold text-slate-800 mb-2">
+              15 Resmas
+              <span class="text-xs font-normal text-slate-500"
+                >(Reduzindo)</span
+              >
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div
+                class="bg-eco-600 h-full w-[70%] transition-all duration-1000"
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class="bg-slate-50 p-4 rounded-xl border border-slate-200 hover:border-brand-500 transition-colors"
+          >
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold text-slate-500 uppercase"
+                >Registros Digitais Completos</span
+              >
+              <span
+                class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded"
+                >Meta: 100%</span
+              >
+            </div>
+            <div class="text-2xl font-extrabold text-slate-800 mb-2">
+              45%
+              <span class="text-xs font-normal text-slate-500"
+                >(Em expansão)</span
+              >
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div
+                class="bg-brand-500 h-full w-[45%] transition-all duration-1000"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 7: Cronograma de Implantação (90 Dias) -->
+      <section
+        id="cronograma"
+        class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm scroll-mt-20 hover-lift"
+      >
+        <div class="mb-8">
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="calendar-range" class="text-brand-600"></i>
+            Cronograma Estratégico de Implantação (90 Dias)
+          </h2>
+          <p class="text-slate-600 text-sm mt-1">
+            Plano tático dividido em 4 fases para reestruturação integral das
+            rotinas da Aprendiz Organiza.
+          </p>
+        </div>
+
+        <div
+          class="space-y-8 md:space-y-6 relative md:before:absolute md:before:inset-0 md:before:left-1/2 md:before:w-0.5 md:before:bg-slate-200"
+        >
+          <!-- Fase 1 -->
+          <div
+            class="relative flex flex-col md:flex-row items-start md:items-center justify-between group"
+          >
+            <div
+              class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 md:w-1/2 md:pr-8 md:text-right"
+            >
+              <div class="flex items-center gap-3 md:hidden mb-1">
+                <div
+                  class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shrink-0"
+                >
+                  1
+                </div>
+                <span
+                  class="text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md border border-brand-200"
+                  >Dias 1 a 15</span
+                >
+              </div>
+              <div>
+                <span
+                  class="hidden md:inline-block text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded border border-brand-200 mb-1"
+                  >Dias 1 a 15</span
+                >
+                <h3 class="text-base font-bold text-slate-800">
+                  Fase 1: Diagnóstico & Levantamento
+                </h3>
+                <p class="text-xs text-slate-600 mt-1">
+                  Levantamento do arquivo físico, auditoria dos 18 contratos
+                  pendentes e identificação de inconsistências nas planilhas
+                  operacionais.
+                </p>
+              </div>
+            </div>
+            <div
+              class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-brand-600 border-4 border-white text-white items-center justify-center font-bold text-xs shadow transition-transform group-hover:scale-125 z-10"
+            >
+              1
+            </div>
+            <div class="md:w-1/2 md:pl-8"></div>
+          </div>
+
+          <!-- Fase 2 -->
+          <div
+            class="relative flex flex-col md:flex-row items-start md:items-center justify-between group"
+          >
+            <div class="md:w-1/2 md:pr-8"></div>
+            <div
+              class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-brand-600 border-4 border-white text-white items-center justify-center font-bold text-xs shadow transition-transform group-hover:scale-125 z-10"
+            >
+              2
+            </div>
+            <div
+              class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 md:w-1/2 md:pl-8"
+            >
+              <div class="flex items-center gap-3 md:hidden mb-1">
+                <div
+                  class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shrink-0"
+                >
+                  2
+                </div>
+                <span
+                  class="text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md border border-brand-200"
+                  >Dias 16 a 30</span
+                >
+              </div>
+              <div>
+                <span
+                  class="hidden md:inline-block text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded border border-brand-200 mb-1"
+                  >Dias 16 a 30</span
+                >
+                <h3 class="text-base font-bold text-slate-800">
+                  Fase 2: Padronização & Modelos
+                </h3>
+                <p class="text-xs text-slate-600 mt-1">
+                  Criação de modelos padronizados de planilhas, normatização dos
+                  5 fluxos administrativos e oficialização dos canais de
+                  comunicação.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fase 3 -->
+          <div
+            class="relative flex flex-col md:flex-row items-start md:items-center justify-between group"
+          >
+            <div
+              class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 md:w-1/2 md:pr-8 md:text-right"
+            >
+              <div class="flex items-center gap-3 md:hidden mb-1">
+                <div
+                  class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shrink-0"
+                >
+                  3
+                </div>
+                <span
+                  class="text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md border border-brand-200"
+                  >Dias 31 a 60</span
+                >
+              </div>
+              <div>
+                <span
+                  class="hidden md:inline-block text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded border border-brand-200 mb-1"
+                  >Dias 31 a 60</span
+                >
+                <h3 class="text-base font-bold text-slate-800">
+                  Fase 3: Controles Digitais & Treinamento
+                </h3>
+                <p class="text-xs text-slate-600 mt-1">
+                  Digitalização do acervo, implantação de repositório em nuvem
+                  com níveis de acesso (RBAC) e capacitação das equipes nos
+                  novos fluxos.
+                </p>
+              </div>
+            </div>
+            <div
+              class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-brand-600 border-4 border-white text-white items-center justify-center font-bold text-xs shadow transition-transform group-hover:scale-125 z-10"
+            >
+              3
+            </div>
+            <div class="md:w-1/2 md:pl-8"></div>
+          </div>
+
+          <!-- Fase 4 -->
+          <div
+            class="relative flex flex-col md:flex-row items-start md:items-center justify-between group"
+          >
+            <div class="md:w-1/2 md:pr-8"></div>
+            <div
+              class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-brand-600 border-4 border-white text-white items-center justify-center font-bold text-xs shadow transition-transform group-hover:scale-125 z-10"
+            >
+              4
+            </div>
+            <div
+              class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 md:w-1/2 md:pl-8"
+            >
+              <div class="flex items-center gap-3 md:hidden mb-1">
+                <div
+                  class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shrink-0"
+                >
+                  4
+                </div>
+                <span
+                  class="text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md border border-brand-200"
+                  >Dias 61 a 90</span
+                >
+              </div>
+              <div>
+                <span
+                  class="hidden md:inline-block text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded border border-brand-200 mb-1"
+                  >Dias 61 a 90</span
+                >
+                <h3 class="text-base font-bold text-slate-800">
+                  Fase 4: Monitoramento & Ajustes
+                </h3>
+                <p class="text-xs text-slate-600 mt-1">
+                  Acompanhamento dos KPIs baseline, refinamento contínuo dos
+                  processos, auditoria de segurança da informação e avaliação
+                  final de resultados.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3: Os 5 Fluxogramas Obrigatórios (Reposicionado) -->
+      <section id="fluxogramas" class="scroll-mt-20">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="git-merge" class="text-brand-600"></i>
+            Mapeamento e Padronização de Fluxos de Processo
+          </h2>
+          <p class="text-slate-600 text-sm mt-1">
+            Apresentação dos 5 processos chave em formato textual normalizado e
+            gráfico interativo.
+          </p>
+        </div>
+
+        <div class="space-y-8">
+          <!-- FLUXO 1 -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover-lift"
+          >
+            <div
+              class="bg-slate-800 text-white p-4 flex justify-between items-center"
+            >
+              <h3 class="font-bold flex items-center gap-2">
+                <span
+                  class="bg-brand-500 text-white text-xs px-2 py-0.5 rounded"
+                  >Fluxo 1</span
+                >
+                Gestão de Documentos
+              </h3>
+              <span class="text-xs text-slate-300"
+                >Entrada, Digitalização e Arquivo</span
+              >
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 flex items-center gap-1"
+                >
+                  <i
+                    data-lucide="align-left"
+                    class="w-4 h-4 text-brand-600"
+                  ></i>
+                  Sequência Textual com Decisões
+                </h4>
+                <p
+                  class="text-xs leading-relaxed text-slate-700 font-mono bg-white p-3 rounded border border-slate-200"
+                >
+                  Receber documento → Conferir integridade → Documento completo?
+                  <br />
+                  ├── <strong>Sim:</strong> Digitalizar → Identificar →
+                  Armazenar → Conferir arquivo → Arquivar o original quando
+                  necessário.<br />
+                  └── <strong>Não:</strong> Registrar pendência → Solicitar
+                  correção → Receber documento corrigido → Conferir novamente.
+                </p>
+              </div>
+              <div
+                class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col items-center justify-center"
+              >
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 self-start flex items-center gap-1"
+                >
+                  <i data-lucide="layout" class="w-4 h-4 text-brand-600"></i>
+                  Diagrama de Processo (Visual)
+                </h4>
+                <div class="w-full max-w-md text-center text-xs space-y-2">
+                  <div
+                    class="bg-white border border-slate-300 p-2 rounded shadow-sm font-semibold"
+                  >
+                    Receber Documento & Conferir Integridade
+                  </div>
+                  <div class="flow-line-v h-4"></div>
+                  <div
+                    class="bg-amber-100 border border-amber-300 p-2 rounded-lg font-bold text-amber-900"
+                  >
+                    Documento Completo?
+                  </div>
+                  <div class="grid grid-cols-2 gap-4 mt-2">
+                    <div class="border-t-2 border-emerald-500 pt-2">
+                      <span class="text-emerald-700 font-bold block mb-1"
+                        >SIM</span
+                      >
+                      <div
+                        class="bg-emerald-50 border border-emerald-200 p-2 rounded text-emerald-900"
+                      >
+                        Digitalizar & Identificar
+                      </div>
+                      <div class="flow-line-v h-3 my-1"></div>
+                      <div
+                        class="bg-emerald-50 border border-emerald-200 p-2 rounded text-emerald-900"
+                      >
+                        Armazenar no Cloud & Arquivar Físico
+                      </div>
+                    </div>
+                    <div class="border-t-2 border-red-500 pt-2">
+                      <span class="text-red-700 font-bold block mb-1">NÃO</span>
+                      <div
+                        class="bg-red-50 border border-red-200 p-2 rounded text-red-900"
+                      >
+                        Registrar Pendência & Solicitar Correção
+                      </div>
+                      <div class="flow-line-v h-3 my-1"></div>
+                      <div
+                        class="bg-red-50 border border-red-200 p-2 rounded text-red-900"
+                      >
+                        Receber Corrigido → Reavaliar
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUADRO EBOX DIGITAL -->
+          <div
+            class="bg-gradient-to-r from-blue-900 via-slate-900 to-blue-950 p-6 rounded-2xl border-2 border-brand-500 shadow-xl my-6 animate-canva-pop"
+          >
+            <div
+              class="flex flex-col sm:flex-row items-center justify-between gap-6"
+            >
+              <div class="flex items-center gap-4 text-center sm:text-left">
+                <div
+                  class="p-3 bg-brand-500/20 rounded-xl border border-brand-400/30"
+                >
+                  <i
+                    data-lucide="external-link"
+                    class="w-8 h-8 text-brand-400"
+                  ></i>
+                </div>
+                <div>
+                  <span
+                    class="bg-brand-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest"
+                    >Plataforma Recomendada</span
+                  >
+                  <h4 class="text-xl font-bold text-white mt-1">
+                    Site eBox Digital
+                  </h4>
+                  <p class="text-slate-300 text-xs mt-0.5">
+                    Solução especializada em gestão documental, guarda física e
+                    digitalização de acervos corporativos.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href="https://www.eboxdigital.com.br/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group relative inline-flex items-center gap-3 bg-slate-900 hover:bg-black text-white px-6 py-3 rounded-xl border border-brand-400/50 shadow-lg hover:shadow-brand-500/30 transition-all duration-300 hover:scale-105 active:scale-95 shrink-0"
+              >
+                <div
+                  class="w-9 h-9 bg-[#0284c7] rounded flex items-center justify-center p-0.5 shadow"
+                >
+                  <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <rect
+                      x="12"
+                      y="12"
+                      width="76"
+                      height="76"
+                      rx="14"
+                      fill="#000000"
+                    />
+                    <text
+                      x="32"
+                      y="48"
+                      font-size="40"
+                      font-weight="900"
+                      font-family="Arial, sans-serif"
+                      fill="#0284c7"
+                      text-anchor="middle"
+                    >
+                      e
+                    </text>
+                    <text
+                      x="66"
+                      y="48"
+                      font-size="38"
+                      font-weight="900"
+                      font-family="Arial, sans-serif"
+                      fill="#ffffff"
+                      text-anchor="middle"
+                    >
+                      B
+                    </text>
+                    <text
+                      x="32"
+                      y="80"
+                      font-size="38"
+                      font-weight="900"
+                      font-family="Arial, sans-serif"
+                      fill="#ffffff"
+                      text-anchor="middle"
+                    >
+                      O
+                    </text>
+                    <text
+                      x="66"
+                      y="80"
+                      font-size="38"
+                      font-weight="900"
+                      font-family="Arial, sans-serif"
+                      fill="#ffffff"
+                      text-anchor="middle"
+                    >
+                      X
+                    </text>
+                  </svg>
+                </div>
+                <div class="text-left">
+                  <span
+                    class="block text-[10px] text-brand-400 font-semibold uppercase tracking-wider"
+                    >Acessar Sistema</span
+                  >
+                  <span
+                    class="block font-extrabold text-sm text-white group-hover:text-brand-300 transition-colors"
+                    >Visitar eBox Digital →</span
+                  >
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- FLUXO 2 -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover-lift"
+          >
+            <div
+              class="bg-slate-800 text-white p-4 flex justify-between items-center"
+            >
+              <h3 class="font-bold flex items-center gap-2">
+                <span
+                  class="bg-brand-500 text-white text-xs px-2 py-0.5 rounded"
+                  >Fluxo 2</span
+                >
+                Controle de Contratos
+              </h3>
+              <span class="text-xs text-slate-300"
+                >Elaboração, Validação e SLA</span
+              >
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 flex items-center gap-1"
+                >
+                  <i
+                    data-lucide="align-left"
+                    class="w-4 h-4 text-brand-600"
+                  ></i>
+                  Sequência Textual com Decisões
+                </h4>
+                <p
+                  class="text-xs leading-relaxed text-slate-700 font-mono bg-white p-3 rounded border border-slate-200"
+                >
+                  Receber solicitação → Registrar cliente e prazo → Elaborar
+                  contrato → Conferir informações → Contrato correto?<br />
+                  ├── <strong>Sim:</strong> Encaminhar para aprovação →
+                  Aprovado?<br />
+                  │ ├── <strong>Sim:</strong> Enviar ao cliente → Registrar
+                  comprovante → Arquivar.<br />
+                  │ └── <strong>Não:</strong> Realizar ajustes solicitados e
+                  retornar.<br />
+                  └── <strong>Não:</strong> Corrigir informações e retornar à
+                  etapa correspondente.
+                </p>
+              </div>
+              <div
+                class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col items-center justify-center"
+              >
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 self-start flex items-center gap-1"
+                >
+                  <i data-lucide="layout" class="w-4 h-4 text-brand-600"></i>
+                  Diagrama de Processo (Visual)
+                </h4>
+                <div class="w-full max-w-md text-center text-xs space-y-2">
+                  <div
+                    class="bg-white border border-slate-300 p-2 rounded shadow-sm"
+                  >
+                    Solicitação → Registrar Prazo → Elaborar
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-amber-100 border border-amber-300 p-1.5 rounded font-bold"
+                  >
+                    Contrato Correto?
+                  </div>
+                  <div class="flex justify-between gap-2 mt-1">
+                    <div
+                      class="w-1/2 bg-emerald-50 border border-emerald-200 p-2 rounded"
+                    >
+                      <span class="text-emerald-700 font-bold block">SIM</span>
+                      Encaminhar p/ Aprovação
+                    </div>
+                    <div
+                      class="w-1/2 bg-red-50 border border-red-200 p-2 rounded"
+                    >
+                      <span class="text-red-700 font-bold block">NÃO</span>
+                      Corrigir Informações
+                    </div>
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-amber-100 border border-amber-300 p-1.5 rounded font-bold"
+                  >
+                    Aprovado pela Gestão?
+                  </div>
+                  <div class="flex justify-between gap-2 mt-1">
+                    <div
+                      class="w-1/2 bg-emerald-50 border border-emerald-300 p-2 rounded font-bold text-emerald-800"
+                    >
+                      SIM: Enviar Cliente & Arquivar
+                    </div>
+                    <div
+                      class="w-1/2 bg-red-50 border border-red-300 p-2 rounded font-bold text-red-800"
+                    >
+                      NÃO: Ajustar Minuta
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FLUXO 3 -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover-lift"
+          >
+            <div
+              class="bg-slate-800 text-white p-4 flex justify-between items-center"
+            >
+              <h3 class="font-bold flex items-center gap-2">
+                <span
+                  class="bg-brand-500 text-white text-xs px-2 py-0.5 rounded"
+                  >Fluxo 3</span
+                >
+                Escalas de Funcionários
+              </h3>
+              <span class="text-xs text-slate-300"
+                >Planejamento Operacional e Publicação</span
+              >
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 flex items-center gap-1"
+                >
+                  <i
+                    data-lucide="align-left"
+                    class="w-4 h-4 text-brand-600"
+                  ></i>
+                  Sequência Textual com Decisões
+                </h4>
+                <p
+                  class="text-xs leading-relaxed text-slate-700 font-mono bg-white p-3 rounded border border-slate-200"
+                >
+                  Levantar demanda e disponibilidade → Elaborar escala →
+                  Conferir horários → Existem divergências?<br />
+                  ├── <strong>Sim:</strong> Ajustar escala → Conferir
+                  novamente.<br />
+                  └── <strong>Não:</strong> Encaminhar para aprovação → Escala
+                  aprovada?<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;├── <strong>Sim:</strong> Publicar e
+                  comunicar aos funcionários.<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;└── <strong>Não:</strong> Realizar
+                  ajustes e encaminhar novamente p/ aprovação.
+                </p>
+              </div>
+              <div
+                class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col items-center justify-center"
+              >
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 self-start flex items-center gap-1"
+                >
+                  <i data-lucide="layout" class="w-4 h-4 text-brand-600"></i>
+                  Diagrama de Processo (Visual)
+                </h4>
+                <div class="w-full max-w-md text-center text-xs space-y-2">
+                  <div class="bg-white border border-slate-300 p-2 rounded">
+                    Demanda + Disponibilidade → Elaborar Escala
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-amber-100 border border-amber-300 p-1.5 rounded font-bold"
+                  >
+                    Existem Divergências?
+                  </div>
+                  <div class="flex justify-between gap-2">
+                    <div
+                      class="w-1/2 bg-red-50 border border-red-200 p-2 rounded"
+                    >
+                      <span class="text-red-700 font-bold block">SIM</span>
+                      Ajustar Horários / Vagas
+                    </div>
+                    <div
+                      class="w-1/2 bg-emerald-50 border border-emerald-200 p-2 rounded"
+                    >
+                      <span class="text-emerald-700 font-bold block">NÃO</span>
+                      Enviar p/ Aprovação Gestão
+                    </div>
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-emerald-100 border border-emerald-300 p-2 rounded font-bold text-emerald-900"
+                  >
+                    Publicar & Notificar Equipe (Oficial)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FLUXO 4 -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover-lift"
+          >
+            <div
+              class="bg-slate-800 text-white p-4 flex justify-between items-center"
+            >
+              <h3 class="font-bold flex items-center gap-2">
+                <span
+                  class="bg-brand-500 text-white text-xs px-2 py-0.5 rounded"
+                  >Fluxo 4</span
+                >
+                Controle de Serviços e Integração Financeira
+              </h3>
+              <span class="text-xs text-slate-300"
+                >Validação Operacional e Faturamento</span
+              >
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 flex items-center gap-1"
+                >
+                  <i
+                    data-lucide="align-left"
+                    class="w-4 h-4 text-brand-600"
+                  ></i>
+                  Sequência Textual com Decisões
+                </h4>
+                <p
+                  class="text-xs leading-relaxed text-slate-700 font-mono bg-white p-3 rounded border border-slate-200"
+                >
+                  Registrar serviço executado → Receber comprovantes → Conferir
+                  dados → Informações corretas?<br />
+                  ├── <strong>Não:</strong> Solicitar correção ao setor
+                  operacional e conferir novamente.<br />
+                  └── <strong>Sim:</strong> Encaminhar ao financeiro → Conferir
+                  valores → Valores corretos?<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;├── <strong>Sim:</strong> Registrar
+                  lançamento → Providenciar faturamento → Atualizar status →
+                  Arquivar.<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;└── <strong>Não:</strong> Solicitar
+                  esclarecimentos e corrigir os registros.
+                </p>
+              </div>
+              <div
+                class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col items-center justify-center"
+              >
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 self-start flex items-center gap-1"
+                >
+                  <i data-lucide="layout" class="w-4 h-4 text-brand-600"></i>
+                  Diagrama de Processo (Visual)
+                </h4>
+                <div class="w-full max-w-md text-center text-xs space-y-2">
+                  <div class="bg-white border border-slate-300 p-2 rounded">
+                    Serviço Executado → Anexar Comprovantes
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-amber-100 border border-amber-300 p-1.5 rounded font-bold"
+                  >
+                    Informações Operacionais Ok?
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div class="bg-blue-50 border border-blue-200 p-2 rounded">
+                    Encaminhar ao Financeiro
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-amber-100 border border-amber-300 p-1.5 rounded font-bold"
+                  >
+                    Valores & Tributos Corretos?
+                  </div>
+                  <div
+                    class="bg-emerald-50 border border-emerald-300 p-2 rounded font-bold text-emerald-900 mt-2"
+                  >
+                    Sim: Faturamento → Status Atualizado → Arquivar
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FLUXO 5 -->
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover-lift"
+          >
+            <div
+              class="bg-slate-800 text-white p-4 flex justify-between items-center"
+            >
+              <h3 class="font-bold flex items-center gap-2">
+                <span
+                  class="bg-brand-500 text-white text-xs px-2 py-0.5 rounded"
+                  >Fluxo 5</span
+                >
+                Comunicação Entre Setores
+              </h3>
+              <span class="text-xs text-slate-300"
+                >Canal Oficial e Chamados Internos</span
+              >
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 flex items-center gap-1"
+                >
+                  <i
+                    data-lucide="align-left"
+                    class="w-4 h-4 text-brand-600"
+                  ></i>
+                  Sequência Textual com Decisões
+                </h4>
+                <p
+                  class="text-xs leading-relaxed text-slate-700 font-mono bg-white p-3 rounded border border-slate-200"
+                >
+                  Identificar necessidade → Registrar solicitação em canal
+                  oficial → Definir responsável e prazo → Informações
+                  completas?<br />
+                  ├── <strong>Não:</strong> Solicitar complementação → Retornar
+                  à análise.<br />
+                  └── <strong>Sim:</strong> Encaminhar ao setor responsável →
+                  Executar providência → Atualizar status → Comunicar resultado
+                  → Arquivar e encerrar.
+                </p>
+              </div>
+              <div
+                class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col items-center justify-center"
+              >
+                <h4
+                  class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 self-start flex items-center gap-1"
+                >
+                  <i data-lucide="layout" class="w-4 h-4 text-brand-600"></i>
+                  Diagrama de Processo (Visual)
+                </h4>
+                <div class="w-full max-w-md text-center text-xs space-y-2">
+                  <div class="bg-white border border-slate-300 p-2 rounded">
+                    Abertura de Chamado em Canal Oficial
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-amber-100 border border-amber-300 p-1.5 rounded font-bold"
+                  >
+                    Informações Completas?
+                  </div>
+                  <div class="flex justify-between gap-2 mt-1">
+                    <div
+                      class="w-1/2 bg-red-50 border border-red-200 p-2 rounded"
+                    >
+                      <span class="text-red-700 font-bold block">NÃO</span>
+                      Solicitar Complementação
+                    </div>
+                    <div
+                      class="w-1/2 bg-emerald-50 border border-emerald-200 p-2 rounded"
+                    >
+                      <span class="text-emerald-700 font-bold block">SIM</span>
+                      Atribuir Responsável + Prazo
+                    </div>
+                  </div>
+                  <div class="flow-line-v h-3"></div>
+                  <div
+                    class="bg-emerald-50 border border-emerald-300 p-2 rounded text-emerald-900 font-bold"
+                  >
+                    Executar Providência → Notificar Solicitante → Encerrar
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer
+      class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-12 no-print"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs space-y-2"
+      >
+        <p class="text-slate-300 font-semibold">
+          Aprendiz Organiza &copy; 2026 - Reorganização Operacional e Eficiência
+          Administrativa
+        </p>
+        <p>
+          Projeto de reestruturação de rotinas, padronização de processos e
+          sustentabilidade corporativa.
+        </p>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>
